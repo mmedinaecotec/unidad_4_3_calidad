@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calidad en Entornos Ágiles y Gestión del Cambio | ECOTEC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0097A7;
+    --teal-dark:#00707D;
+    --teal-darker:#00565F;
+    --teal-light:#E0F7FA;
+    --teal-lighter:#F3FBFC;
+    --ink:#1E2B32;
+    --ink-soft:#4B5D66;
+    --line:#E1E8EA;
+    --bg:#FFFFFF;
+    --ok:#1E8E5A;
+    --ok-bg:#E6F7EF;
+    --bad:#C0392B;
+    --bad-bg:#FBEAE8;
+    --amber:#B7791F;
+    --amber-bg:#FBF3E3;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 4px 18px rgba(0,60,66,0.08);
+    --shadow-sm:0 2px 10px rgba(0,60,66,0.06);
+    --maxw:940px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4,.disp{font-family:'Poppins', sans-serif;}
+  p{margin:0 0 14px;}
+  .icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .icon-fill{fill:currentColor;}
+
+  main{max-width:var(--maxw); margin:0 auto; padding:0 24px 100px;}
+  section.panel{display:none; animation:fade .35s ease;}
+  section.panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    background:linear-gradient(135deg, var(--teal-darker) 0%, var(--teal) 100%);
+    color:#fff;
+    padding:40px 24px 34px;
+  }
+  .masthead-inner{max-width:var(--maxw); margin:0 auto;}
+  .wordmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:15px;
+    letter-spacing:.02em; color:#fff; opacity:.92; margin-bottom:22px;
+  }
+  .wordmark .mark{width:26px;height:26px;flex-shrink:0;}
+  .unit-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+    padding:5px 14px; border-radius:100px; font-size:13px; font-weight:600;
+    margin-bottom:16px;
+  }
+  .masthead h1{font-size:clamp(26px,4vw,38px); font-weight:700; margin:0 0 10px; line-height:1.2; max-width:680px;}
+  .masthead .subtitle{font-size:16px; opacity:.9; max-width:600px; margin:0 0 18px; font-weight:400;}
+  .instructor-line{
+    display:flex; align-items:center; gap:10px; font-size:13.5px; opacity:.85;
+    border-top:1px solid rgba(255,255,255,.22); padding-top:16px; margin-top:6px;
+  }
+
+  /* ---------- Nav tabs ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:30;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .tabs-scroll{
+    max-width:1180px; margin:0 auto;
+    display:flex; gap:3px; overflow-x:auto;
+    padding:10px 20px; scrollbar-width:thin;
+  }
+  .tabs-scroll::-webkit-scrollbar{height:4px;}
+  .tabs-scroll::-webkit-scrollbar-thumb{background:var(--line); border-radius:4px;}
+  .tab-btn{
+    flex:0 0 auto; display:flex; align-items:center; gap:6px;
+    background:none; border:none; cursor:pointer;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px;
+    color:var(--ink-soft); padding:9px 12px; border-radius:100px;
+    white-space:nowrap; transition:background .15s, color .15s;
+  }
+  .tab-btn .icon{width:16px;height:16px;}
+  .tab-btn:hover{background:var(--teal-light); color:var(--teal-darker);}
+  .tab-btn.active{background:var(--teal); color:#fff;}
+
+  /* ---------- Generic content blocks ---------- */
+  .section-head{margin:44px 0 22px;}
+  .section-head:first-of-type{margin-top:38px;}
+  .section-head h2{font-size:24px; font-weight:700; color:var(--ink); margin:0 0 8px; display:flex; align-items:center; gap:10px;}
+  .section-head h2 .icon{color:var(--teal); width:24px; height:24px;}
+  .section-head .lede{font-size:15.5px; color:var(--ink-soft); max-width:680px; margin:0;}
+  .kicker{font-size:12.5px; font-weight:700; color:var(--teal-dark); margin:0 0 6px;}
+
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; box-shadow:var(--shadow-sm);
+  }
+  .card + .card{margin-top:14px;}
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:760px){ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;} }
+
+  .pill{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--teal-light); color:var(--teal-darker);
+    font-size:12px; font-weight:700; padding:4px 11px; border-radius:100px;
+  }
+
+  blockquote.callout{
+    margin:18px 0; padding:16px 20px; background:var(--teal-lighter);
+    border-left:3px solid var(--teal); border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    font-size:15px; color:var(--ink); font-style:normal;
+  }
+  blockquote.callout p:last-child{margin-bottom:0;}
+
+  ul.clean{margin:0 0 14px; padding-left:20px;}
+  ul.clean li{margin-bottom:7px;}
+  ul.clean li::marker{color:var(--teal);}
+
+  table.cmp{width:100%; border-collapse:collapse; font-size:14.5px; margin:18px 0;}
+  table.cmp th{
+    background:var(--teal-lighter); color:var(--teal-darker); text-align:left;
+    padding:11px 14px; font-weight:700; border-bottom:2px solid var(--teal-light);
+  }
+  table.cmp td{padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.cmp tr:last-child td{border-bottom:none;}
+  table.cmp td.rowlabel{font-weight:700; color:var(--ink); white-space:nowrap;}
+  @media (max-width:640px){
+    table.cmp, table.cmp thead, table.cmp tbody, table.cmp th, table.cmp td, table.cmp tr{display:block;}
+    table.cmp thead{display:none;}
+    table.cmp tr{border:1px solid var(--line); border-radius:var(--radius-sm); margin-bottom:10px; padding:6px 0;}
+    table.cmp td{border-bottom:none; padding:6px 14px;}
+    table.cmp td.rowlabel{color:var(--teal-dark);}
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    border-radius:100px; border:1px solid var(--line); background:#fff; color:var(--ink);
+    padding:10px 18px; transition:border-color .15s, background .15s;
+  }
+  .btn:hover{border-color:var(--teal);}
+  .btn.primary{background:var(--teal); color:#fff; border-color:var(--teal);}
+  .btn.primary:hover{background:var(--teal-dark);}
+  .btn:disabled{opacity:.45; cursor:not-allowed;}
+
+  /* ---------- Activity shell ---------- */
+  .activity{
+    background:var(--teal-lighter); border:1px solid var(--teal-light);
+    border-radius:var(--radius); padding:24px 26px; margin:22px 0 30px;
+  }
+  .activity-head{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .activity-head .tag{
+    background:var(--teal); color:#fff; font-size:11.5px; font-weight:700;
+    padding:3px 10px; border-radius:100px; letter-spacing:.02em;
+  }
+  .activity-head h3{margin:0; font-size:16.5px; font-weight:700;}
+  .activity p.instructions{color:var(--ink-soft); font-size:14px; margin-bottom:16px;}
+
+  /* Flip cards */
+  .flip-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media (max-width:640px){.flip-grid{grid-template-columns:1fr;}}
+  .flip-card{perspective:1200px; height:168px; cursor:pointer;}
+  .flip-inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-face{
+    position:absolute; inset:0; backface-visibility:hidden; border-radius:var(--radius-sm);
+    padding:18px; display:flex; flex-direction:column; justify-content:center; gap:8px;
+    border:1px solid var(--line); box-shadow:var(--shadow-sm);
+  }
+  .flip-front{background:#fff;}
+  .flip-front .icon{color:var(--teal); width:26px; height:26px;}
+  .flip-front h4{margin:0; font-size:15.5px; font-weight:700;}
+  .flip-front .tap-hint{margin-top:auto; font-size:11.5px; color:var(--ink-soft); font-weight:600;}
+  .flip-back{background:var(--teal-darker); color:#fff; transform:rotateY(180deg); font-size:13.5px;}
+  .flip-back strong{display:block; margin-bottom:4px; font-size:13px; color:var(--teal-light);}
+
+  /* Classification / diagnostic activity */
+  .classify-item{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .classify-item .statement{font-size:14.5px; margin-bottom:12px; color:var(--ink);}
+  .classify-choices{display:flex; gap:10px; flex-wrap:wrap;}
+  .choice-btn{
+    flex:1 1 auto; min-width:140px; text-align:center;
+    border:1.5px solid var(--line); background:#fff; border-radius:var(--radius-sm);
+    padding:9px 12px; font-weight:600; font-size:13.5px; cursor:pointer; color:var(--ink-soft);
+    transition:all .15s;
+  }
+  .choice-btn:hover:not(:disabled){border-color:var(--teal);}
+  .choice-btn:disabled{cursor:default;}
+  .choice-btn.correct{background:var(--ok-bg); border-color:var(--ok); color:var(--ok);}
+  .choice-btn.incorrect{background:var(--bad-bg); border-color:var(--bad); color:var(--bad);}
+  .feedback{
+    margin-top:12px; padding:11px 14px; border-radius:var(--radius-sm); font-size:13.5px; display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--ok-bg); color:#15603f;}
+  .feedback.bad{background:var(--bad-bg); color:#8f2d21;}
+
+  /* ADKAR stepper */
+  .adkar-strip{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+  .adkar-letter{
+    flex:1 1 0; min-width:64px; text-align:center; cursor:pointer;
+    border:1.5px solid var(--line); border-radius:var(--radius-sm); padding:14px 6px;
+    background:#fff; transition:all .15s;
+  }
+  .adkar-letter .big{font-family:'Poppins',sans-serif; font-size:26px; font-weight:800; color:var(--teal); display:block;}
+  .adkar-letter .lbl{font-size:11px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em;}
+  .adkar-letter.active{background:var(--teal); border-color:var(--teal);}
+  .adkar-letter.active .big, .adkar-letter.active .lbl{color:#fff;}
+  .adkar-detail{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; box-shadow:var(--shadow-sm);
+  }
+  .adkar-detail h4{margin:0 0 4px; font-size:19px;}
+  .adkar-detail .q{color:var(--teal-dark); font-weight:600; font-size:14.5px; margin-bottom:12px;}
+  .adkar-detail .acts{margin-top:14px;}
+  .adkar-detail .acts .lbl-sm{font-size:12px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; margin-bottom:6px;}
+
+  /* Cycle diagram */
+  .cycle-wrap{display:flex; gap:26px; align-items:center; flex-wrap:wrap;}
+  .cycle-svg{width:260px; height:260px; flex-shrink:0;}
+  .cycle-node{cursor:pointer;}
+  .cycle-detail{flex:1; min-width:240px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow-sm);}
+  .cycle-detail h4{margin:0 0 8px; font-size:17px; color:var(--teal-darker);}
+
+  /* Quiz */
+  .quiz-progress{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; font-size:13.5px; color:var(--ink-soft); font-weight:600;}
+  .quiz-q{font-size:16.5px; font-weight:700; margin-bottom:16px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:10px; margin-bottom:16px;}
+  .quiz-opt{
+    text-align:left; border:1.5px solid var(--line); background:#fff; border-radius:var(--radius-sm);
+    padding:13px 16px; font-size:14.5px; cursor:pointer; transition:all .15s; font-family:'Inter',sans-serif; color:var(--ink);
+  }
+  .quiz-opt:hover:not(:disabled){border-color:var(--teal);}
+  .quiz-opt.correct{background:var(--ok-bg); border-color:var(--ok);}
+  .quiz-opt.incorrect{background:var(--bad-bg); border-color:var(--bad);}
+  .quiz-explain{background:var(--teal-lighter); border-radius:var(--radius-sm); padding:14px 16px; font-size:14px; margin-bottom:16px; display:none;}
+  .quiz-explain.show{display:block;}
+  .quiz-score{
+    text-align:center; padding:34px 20px;
+  }
+  .quiz-score .num{font-family:'Poppins',sans-serif; font-size:52px; font-weight:800; color:var(--teal);}
+
+  /* Checklist (multi-select) */
+  .check-row{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 14px;
+    border:1.5px solid var(--line); border-radius:var(--radius-sm); margin-bottom:9px; cursor:pointer;
+  }
+  .check-row .box{
+    width:20px; height:20px; border:2px solid var(--line); border-radius:5px; flex-shrink:0; margin-top:1px;
+    display:flex; align-items:center; justify-content:center; transition:all .15s;
+  }
+  .check-row.picked .box{background:var(--teal); border-color:var(--teal);}
+  .check-row.picked .box svg{display:block;}
+  .check-row .box svg{display:none; width:13px; height:13px; stroke:#fff; stroke-width:3;}
+  .check-row.reveal.good{border-color:var(--ok); background:var(--ok-bg);}
+  .check-row.reveal.bad{border-color:var(--bad); background:var(--bad-bg);}
+  .check-row span.txt{font-size:14.5px;}
+
+  /* Reflection */
+  textarea.reflect{
+    width:100%; border:1.5px solid var(--line); border-radius:var(--radius-sm);
+    padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; min-height:90px; resize:vertical;
+  }
+  textarea.reflect:focus{outline:none; border-color:var(--teal);}
+
+  /* Synthesis */
+  .synth-card{display:flex; gap:14px; align-items:flex-start;}
+  .synth-card .num{
+    font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; color:#fff;
+    background:var(--teal); width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .synth-card h4{margin:0 0 4px; font-size:15.5px;}
+  .synth-card p{margin:0; font-size:14px; color:var(--ink-soft);}
+
+  .biblio-item{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .biblio-item:last-child{border-bottom:none;}
+  .biblio-item .icon{color:var(--teal); margin-top:2px;}
+  .biblio-item p{margin:0; font-size:14px;}
+
+  footer.page-foot{
+    text-align:center; padding:26px 24px 60px; font-size:12.5px; color:var(--ink-soft);
+  }
+
+  /* Nav jump cards (temario) */
+  .agenda-item{display:flex; gap:16px; align-items:flex-start; cursor:pointer; padding:16px 4px; border-bottom:1px solid var(--line);}
+  .agenda-item:last-child{border-bottom:none;}
+  .agenda-item:hover .agenda-num{background:var(--teal); color:#fff;}
+  .agenda-num{
+    font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; color:var(--teal-dark);
+    background:var(--teal-light); width:34px; height:34px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; transition:all .15s;
+  }
+  .agenda-item h4{margin:0 0 4px; font-size:15.5px;}
+  .agenda-item p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+
+  @media (max-width:640px){
+    .masthead{padding:30px 18px 26px;}
+    main{padding:0 16px 80px;}
+    .card{padding:18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" class="icon-fill" stroke="none"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4.5" cy="6" r="1.3" class="icon-fill" stroke="none"/><circle cx="4.5" cy="12" r="1.3" class="icon-fill" stroke="none"/><circle cx="4.5" cy="18" r="1.3" class="icon-fill" stroke="none"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14l-3.5-3.5"/><path d="M20 16H6l3.5 3.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.3 20c.2-2.7 2-4.7 4.7-5.2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.4 8-7 9-3.6-1-7-4-7-9V6l7-3Z"/><path d="M8.7 12.2l2.2 2.2 4.4-4.6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.4 4.4l2.1 2.1M17.5 17.5l2.1 2.1M2.5 12h3M18.5 12h3M4.4 19.6l2.1-2.1M17.5 6.5l2.1-2.1"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.7-6"/><path d="M20 4v5.3h-5.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V4"/><path d="M5.5 5h13l-3.3 4 3.3 4h-13"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2s-7.3-4.5-9.5-9C1.1 7.8 2.6 4.5 5.8 3.8 8 3.3 10 4.6 12 6.8c2-2.2 4-3.5 6.2-3 3.2.7 4.7 4 3.3 7.4-2.2 4.5-9.5 9-9.5 9Z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.3C4 4.6 4.6 4 5.3 4H12v16H5.3C4.6 20 4 19.4 4 18.7V5.3Z"/><path d="M20 5.3c0-.7-.6-1.3-1.3-1.3H12v16h6.7c.7 0 1.3-.6 1.3-1.3V5.3Z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M7.5 13V5.8a1.4 1.4 0 0 1 2.8 0V12"/><path d="M10.3 12V4.6a1.4 1.4 0 0 1 2.8 0V12"/><path d="M13.1 12V6.3a1.4 1.4 0 0 1 2.8 0V13"/><path d="M15.9 12.5v-1.7a1.4 1.4 0 0 1 2.8 0v5.7c0 3.3-2.4 5.5-5.7 5.5h-1.4c-2 0-3.2-.6-4.4-2.1L4.8 16.7c-.6-.8-.4-1.7.3-2.2.7-.5 1.5-.3 2.1.4l1.6 1.9"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v4.3a5 5 0 0 1-10 0V4Z"/><path d="M7 5.3H4.3v1.9a3 3 0 0 0 3 3M17 5.3h2.7v1.9a3 3 0 0 1-3 3"/><path d="M12 13.3v2.9M9 20h6M9.2 20c.1-1.6.8-2.4 1.7-3.1h2.2c.9.7 1.6 1.5 1.7 3.1"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="M16.8 2.3l3.9 3.9-3.9 3.9"/><path d="M3.3 11V9a4 4 0 0 1 4-4h13.4"/><path d="M7.2 21.7l-3.9-3.9 3.9-3.9"/><path d="M20.7 13v2a4 4 0 0 1-4 4H3.3"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.3"/><path d="M9.3 9.6a2.7 2.7 0 0 1 5.2 1c0 1.9-2.5 1.8-2.5 3.6"/><circle cx="12" cy="17.2" r=".3" class="icon-fill" stroke="none"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3h7.3L18 7.2V21H6.5Z"/><path d="M13.8 3v4.2H18"/><line x1="9" y1="12.3" x2="15.5" y2="12.3"/><line x1="9" y1="15.8" x2="15.5" y2="15.8"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M4 20V6l8-3.4L20 6v14"/><path d="M9 20v-6h6v6"/></symbol>
+</svg>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="wordmark"><svg class="icon mark" viewBox="0 0 24 24"><use href="#i-mark"/></svg> UNIVERSIDAD ECOTEC · ONLINE</div>
+    <div class="unit-tag"><svg class="icon" style="width:14px;height:14px"><use href="#i-target"/></svg> Unidad 4 · Gestión Avanzada y Tendencias en Calidad</div>
+    <h1>Calidad en entornos ágiles y gestión del cambio</h1>
+    <p class="subtitle">Cómo la calidad deja de ser una fase final para convertirse en una responsabilidad compartida — y qué papel juega la gestión del cambio en que eso funcione.</p>
+    <div class="instructor-line">
+      <svg class="icon" style="width:15px;height:15px"><use href="#i-users"/></svg>
+      Ing. Marcela Medina B., M.Sc. · mamedina@ecotec.edu.ec
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-scroll" id="tabsScroll">
+    <button class="tab-btn active" data-tab="objetivo"><svg class="icon"><use href="#i-target"/></svg> Objetivo</button>
+    <button class="tab-btn" data-tab="temario"><svg class="icon"><use href="#i-list"/></svg> Temario</button>
+    <button class="tab-btn" data-tab="evolucion"><svg class="icon"><use href="#i-swap"/></svg> Evolución</button>
+    <button class="tab-btn" data-tab="calidad-agil"><svg class="icon"><use href="#i-shield"/></svg> Calidad ágil</button>
+    <button class="tab-btn" data-tab="cambio"><svg class="icon"><use href="#i-refresh"/></svg> Cambio</button>
+    <button class="tab-btn" data-tab="integracion"><svg class="icon"><use href="#i-loop"/></svg> Integración</button>
+    <button class="tab-btn" data-tab="actividad"><svg class="icon"><use href="#i-quiz"/></svg> Actividad</button>
+    <button class="tab-btn" data-tab="sintesis"><svg class="icon"><use href="#i-doc"/></svg> Síntesis</button>
+  </div>
+</nav>
+
+<main id="mainContent">
+<!-- ============ TAB 1: OBJETIVO ============ -->
+<section class="panel active" id="panel-objetivo">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-target"/></svg> Objetivo de la sesión</h2>
+    <p class="lede">Por qué esta sesión importa y qué vas a poder hacer al terminarla.</p>
+  </div>
+
+  <div class="card">
+    <p class="kicker">OBJETIVO GENERAL</p>
+    <p style="font-size:16.5px; color:var(--ink); margin:0;">Integrar ambos enfoques —calidad y cambio— destacando que la calidad no es únicamente un control técnico, sino una responsabilidad compartida que requiere adaptación cultural, disciplina en la ejecución y herramientas adecuadas.</p>
+  </div>
+
+  <div class="section-head" style="margin-top:36px;">
+    <h3 style="font-size:18px; margin:0 0 4px;">Al finalizar la sesión, estarás en capacidad de:</h3>
+  </div>
+
+  <div class="card" style="cursor:pointer" onclick="toggleObj(this)">
+    <div style="display:flex; gap:14px; align-items:flex-start;">
+      <svg class="icon" style="color:var(--teal); width:26px; height:26px; flex-shrink:0;"><use href="#i-check"/></svg>
+      <div style="flex:1">
+        <h4 style="margin:0 0 4px; font-size:15.5px;">Reconocer las prácticas esenciales para garantizar la calidad en proyectos ágiles</h4>
+        <p class="obj-detail" style="display:none; margin-top:8px; font-size:14px; color:var(--ink-soft);">En la práctica: distinguir cuándo un equipo está aplicando calidad incorporada (built-in quality) frente a cuándo simplemente está delegando la calidad a una revisión final — y saber qué preguntar para notar la diferencia.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="cursor:pointer" onclick="toggleObj(this)">
+    <div style="display:flex; gap:14px; align-items:flex-start;">
+      <svg class="icon" style="color:var(--teal); width:26px; height:26px; flex-shrink:0;"><use href="#i-eye"/></svg>
+      <div style="flex:1">
+        <h4 style="margin:0 0 4px; font-size:15.5px;">Identificar los factores que generan resistencia al cambio</h4>
+        <p class="obj-detail" style="display:none; margin-top:8px; font-size:14px; color:var(--ink-soft);">En la práctica: cuando un equipo "no adopta" una nueva práctica, poder diagnosticar si el problema es falta de información, de motivación, de formación, de práctica o de refuerzo — en vez de asumir que la gente simplemente "se resiste".</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="cursor:pointer" onclick="toggleObj(this)">
+    <div style="display:flex; gap:14px; align-items:flex-start;">
+      <svg class="icon" style="color:var(--teal); width:26px; height:26px; flex-shrink:0;"><use href="#i-refresh"/></svg>
+      <div style="flex:1">
+        <h4 style="margin:0 0 4px; font-size:15.5px;">Aplicar estrategias de gestión del cambio que promuevan la adopción efectiva de nuevas formas de trabajo</h4>
+        <p class="obj-detail" style="display:none; margin-top:8px; font-size:14px; color:var(--ink-soft);">En la práctica: usar un modelo estructurado (ADKAR) en vez de improvisar, para acompañar a un equipo desde el anuncio de un cambio hasta que ese cambio se sostenga en el tiempo.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:4px;">Toca cada tarjeta para ver qué significa en la práctica.</p>
+
+  <blockquote class="callout" style="margin-top:30px;">
+    <p><strong>Idea central de la sesión:</strong> la calidad ágil y la gestión del cambio no son dos temas separados. La calidad incorporada solo se sostiene si el equipo atraviesa, con éxito, un proceso real de cambio.</p>
+  </blockquote>
+
+  <div style="text-align:right; margin-top:26px;">
+    <button class="btn primary" data-jump="temario">Ver el temario <svg class="icon" style="width:16px;height:16px"><use href="#i-arrow"/></svg></button>
+  </div>
+</section>
+
+<!-- ============ TAB 2: TEMARIO ============ -->
+<section class="panel" id="panel-temario">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-list"/></svg> Temario de la sesión</h2>
+    <p class="lede">Seis bloques, de la teoría a la práctica. Toca cualquiera para ir directo a esa sección.</p>
+  </div>
+
+  <div class="card" style="padding:8px 24px;">
+    <div class="agenda-item" data-jump="evolucion">
+      <div class="agenda-num">1</div>
+      <div><h4>Introducción: de lo tradicional a lo ágil</h4><p>Cómo cambió el rol de la calidad y por qué el cambio cultural es lo que hace posible la agilidad.</p></div>
+    </div>
+    <div class="agenda-item" data-jump="calidad-agil">
+      <div class="agenda-num">2</div>
+      <div><h4>Calidad en entornos ágiles</h4><p>Principios en Scrum, Kanban y SAFe; calidad incorporada (Built-in Quality); Definition of Done.</p></div>
+    </div>
+    <div class="agenda-item" data-jump="cambio">
+      <div class="agenda-num">3</div>
+      <div><h4>Gestión del cambio en entornos ágiles</h4><p>El modelo ADKAR: las cinco etapas que atraviesa una persona durante un cambio.</p></div>
+    </div>
+    <div class="agenda-item" data-jump="integracion">
+      <div class="agenda-num">4</div>
+      <div><h4>Integración de calidad y cambio</h4><p>Cómo ambas disciplinas se sostienen mutuamente en un ciclo virtuoso.</p></div>
+    </div>
+    <div class="agenda-item" data-jump="actividad">
+      <div class="agenda-num">5</div>
+      <div><h4>Actividad interactiva</h4><p>Un quiz de cierre que integra todos los conceptos de la unidad.</p></div>
+    </div>
+    <div class="agenda-item" data-jump="sintesis">
+      <div class="agenda-num">6</div>
+      <div><h4>Síntesis y bibliografía</h4><p>Las ideas clave de la sesión y las fuentes para profundizar.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TAB 3: EVOLUCIÓN Y CULTURA ============ -->
+<section class="panel" id="panel-evolucion">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-swap"/></svg> De lo tradicional a lo ágil</h2>
+    <p class="lede">La calidad no cambió de técnicas primero — cambió de lugar en el proceso primero.</p>
+  </div>
+
+  <p>La búsqueda de la calidad en el desarrollo de productos y servicios ha sido una constante, pero el enfoque para lograrla ha cambiado de forma radical. En los modelos tradicionales, como el de cascada, la calidad se gestionaba en una fase separada y tardía: un equipo de control de calidad (QA) realizaba pruebas exhaustivas una vez que el producto estaba casi terminado. La lógica era simple — <em>construir primero, probar después</em>.</p>
+
+  <p>Ese enfoque tenía un riesgo importante: si se encontraba un defecto grave en las fases finales, corregirlo podía ser extremadamente costoso y retrasar la entrega. Además, la calidad era vista como responsabilidad exclusiva del equipo de QA, no como una preocupación de todo el equipo de desarrollo.</p>
+
+  <p>Con la llegada de metodologías ágiles como Scrum y Kanban, la calidad se convirtió en un proceso continuo integrado en cada etapa. Para que la entrega incremental de valor funcione, cada incremento debe ser de alta calidad desde el inicio.</p>
+
+  <div class="activity" style="margin-top:26px;">
+    <div class="activity-head"><span class="tag">COMPARA</span><h3>Enfoque tradicional vs. enfoque ágil</h3></div>
+    <p class="instructions">Toca cada lado para expandir el detalle.</p>
+    <div class="grid-2" id="tradAgilToggle">
+      <div class="card" style="cursor:pointer; border-color:var(--line);" onclick="expandTA(this)">
+        <p class="pill" style="background:var(--line); color:var(--ink-soft);">Enfoque tradicional</p>
+        <h4 style="margin:10px 0 6px; font-size:16px;">La calidad es un rol</h4>
+        <p style="font-size:14px; color:var(--ink-soft); margin:0;" class="ta-detail">Un equipo de QA revisa el trabajo terminado. Mentalidad reactiva: se arreglan los defectos que ya ocurrieron. Un error grave detectado tarde es costoso y retrasa la entrega.</p>
+      </div>
+      <div class="card" style="cursor:pointer; border-color:var(--teal-light);" onclick="expandTA(this)">
+        <p class="pill">Enfoque ágil</p>
+        <h4 style="margin:10px 0 6px; font-size:16px;">La calidad es de todos</h4>
+        <p style="font-size:14px; color:var(--ink-soft); margin:0;" class="ta-detail">Cada miembro del equipo —desarrolladores, diseñadores, product owner— es responsable de la calidad de su propio trabajo. Mentalidad proactiva: se previenen los defectos antes de que ocurran, mediante retroalimentación temprana y frecuente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2 style="font-size:21px;"><svg class="icon" style="width:22px;height:22px"><use href="#i-users"/></svg> El cambio cultural como habilitador</h2>
+    <p class="lede">Adoptar metodologías ágiles va más allá de nuevas herramientas: es, fundamentalmente, una transformación cultural.</p>
+  </div>
+
+  <p>Requiere pasar de estructuras jerárquicas y silos a una cultura de colaboración, transparencia, autoorganización y mejora continua. Cuando los equipos se sienten dueños de su trabajo, la calidad se vuelve una responsabilidad intrínseca y no una imposición externa. Sin este pilar cultural, la implementación ágil queda superficial.</p>
+
+  <div class="flip-grid" style="margin-top:18px;">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <svg class="icon"><use href="#i-users"/></svg>
+          <h4>Colaboración</h4>
+          <span class="tap-hint">Toca para ver más</span>
+        </div>
+        <div class="flip-face flip-back">
+          <strong>De silos a equipos multifuncionales</strong>
+          Fomenta el trabajo en equipo y la comunicación abierta, en lugar de departamentos que actúan de forma aislada.
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <svg class="icon"><use href="#i-eye"/></svg>
+          <h4>Transparencia</h4>
+          <span class="tap-hint">Toca para ver más</span>
+        </div>
+        <div class="flip-face flip-back">
+          <strong>Visibilidad total</strong>
+          Progreso y desafíos visibles para todos, sostenidos por la confianza de que el equipo sabe lo que hace.
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <svg class="icon"><use href="#i-gear"/></svg>
+          <h4>Autoorganización</h4>
+          <span class="tap-hint">Toca para ver más</span>
+        </div>
+        <div class="flip-face flip-back">
+          <strong>De jerarquía a autonomía</strong>
+          Equipos empoderados para decidir cómo trabajar; el líder deja de ser "jefe" y pasa a ser facilitador o coach.
+        </div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <svg class="icon"><use href="#i-refresh"/></svg>
+          <h4>Mejora continua</h4>
+          <span class="tap-hint">Toca para ver más</span>
+        </div>
+        <div class="flip-face flip-back">
+          <strong>El error como aprendizaje</strong>
+          Adaptación y aprendizaje constante: se experimenta y se valora la capacidad de mejorar, en vez de castigar el fallo.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity">
+    <div class="activity-head"><span class="tag">AUTOEVALÚA</span><h3>¿Cultura ágil o cultura tradicional?</h3></div>
+    <p class="instructions">Marca las afirmaciones que describen una cultura que sí habilita la agilidad. Luego revisa tu selección.</p>
+    <div id="cultureCheck">
+      <div class="check-row" data-good="true" onclick="toggleCheck(this)"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 6"/></svg></div><span class="txt">Los líderes actúan como facilitadores que eliminan obstáculos, no como jefes que dan órdenes.</span></div>
+      <div class="check-row" data-good="false" onclick="toggleCheck(this)"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 6"/></svg></div><span class="txt">Cada error se documenta como una falta atribuible a una persona específica.</span></div>
+      <div class="check-row" data-good="true" onclick="toggleCheck(this)"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 6"/></svg></div><span class="txt">El equipo decide en conjunto cómo organizar su propio trabajo.</span></div>
+      <div class="check-row" data-good="false" onclick="toggleCheck(this)"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 6"/></svg></div><span class="txt">La calidad se revisa una sola vez, justo antes de entregar el producto final.</span></div>
+      <div class="check-row" data-good="true" onclick="toggleCheck(this)"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l5 5L20 6"/></svg></div><span class="txt">El progreso del equipo es visible para todos, incluidos los desafíos que enfrenta.</span></div>
+    </div>
+    <button class="btn primary" style="margin-top:6px;" onclick="revealCulture()">Revisar selección</button>
+    <div class="feedback" id="cultureFeedback"></div>
+  </div>
+</section>
+
+<!-- ============ TAB 4: CALIDAD EN ENTORNOS ÁGILES ============ -->
+<section class="panel" id="panel-calidad-agil">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-shield"/></svg> Calidad en entornos ágiles</h2>
+    <p class="lede">Tres marcos de trabajo, un mismo principio de fondo: la calidad se construye, no se verifica al final.</p>
+  </div>
+
+  <p>Las metodologías ágiles como Scrum, Kanban y SAFe no solo guían la entrega de producto: también incorporan principios propios para asegurar la calidad, centrados en la detección temprana de defectos, la prevención de errores y la entrega de software funcional de forma iterativa.</p>
+
+  <div class="grid-3" style="margin-top:18px;">
+    <div class="card" style="cursor:pointer;" onclick="this.classList.toggle('expanded'); this.querySelector('.reveal-txt').style.display = this.classList.contains('expanded') ? 'block':'none'">
+      <p class="pill">Scrum</p>
+      <h4 style="margin:10px 0 6px; font-size:15.5px;">Sprints e inspección frecuente</h4>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Sprints cortos, revisiones y retrospectivas para inspeccionar y adaptar.</p>
+      <p class="reveal-txt" style="display:none; font-size:13.5px; color:var(--ink-soft); margin-top:8px; border-top:1px solid var(--line); padding-top:8px;">La calidad está ligada a la <strong>Definition of Done</strong>: si una historia no cumple los criterios, no se considera "terminada". El Sprint Review capta retroalimentación temprana; la Retrospectiva mejora el proceso, incluida la calidad.</p>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="this.classList.toggle('expanded'); this.querySelector('.reveal-txt').style.display = this.classList.contains('expanded') ? 'block':'none'">
+      <p class="pill">Kanban</p>
+      <h4 style="margin:10px 0 6px; font-size:15.5px;">Flujo visible y WIP limitado</h4>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Visualiza el flujo y limita el trabajo en progreso para mantener un ritmo sostenible.</p>
+      <p class="reveal-txt" style="display:none; font-size:13.5px; color:var(--ink-soft); margin-top:8px; border-top:1px solid var(--line); padding-top:8px;">Limitar el <strong>WIP</strong> reduce el multitasking: el equipo se concentra en menos tareas a la vez, lo que mejora la calidad de cada una. Visualizar el flujo ayuda a identificar y eliminar cuellos de botella.</p>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="this.classList.toggle('expanded'); this.querySelector('.reveal-txt').style.display = this.classList.contains('expanded') ? 'block':'none'">
+      <p class="pill">SAFe</p>
+      <h4 style="margin:10px 0 6px; font-size:15.5px;">Calidad a escala empresarial</h4>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Escala la agilidad a múltiples equipos y programas, manteniendo la calidad consistente.</p>
+      <p class="reveal-txt" style="display:none; font-size:13.5px; color:var(--ink-soft); margin-top:8px; border-top:1px solid var(--line); padding-top:8px;">El principio de <strong>Built-in Quality</strong> es un pilar que aplica desde equipos individuales hasta portafolios. También promueve una arquitectura evolutiva, flexible ante cambios futuros.</p>
+    </div>
+  </div>
+  <p style="text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:10px;">Toca cada tarjeta para ver el detalle.</p>
+
+  <div class="section-head">
+    <h2 style="font-size:21px;"><svg class="icon" style="width:22px;height:22px"><use href="#i-shield"/></svg> Calidad incorporada (Built-in Quality)</h2>
+  </div>
+
+  <p>Es una piedra angular de la agilidad: la calidad no se añade al final, se integra en cada paso del proceso. Es una responsabilidad compartida por todo el equipo —no solo del departamento de QA— e incluye automatización de pruebas, revisiones de código, integración continua y diseño robusto desde el inicio.</p>
+
+  <div class="grid-4" style="margin-top:16px;">
+    <div class="card" style="text-align:center; padding:18px 14px;">
+      <svg class="icon" style="color:var(--teal); width:24px; height:24px; margin-bottom:8px;"><use href="#i-users"/></svg>
+      <h4 style="font-size:13.5px; margin:0 0 4px;">Todo el equipo</h4>
+      <p style="font-size:12.5px; color:var(--ink-soft); margin:0;">No solo los testers: cada rol es responsable de la calidad de su trabajo.</p>
+    </div>
+    <div class="card" style="text-align:center; padding:18px 14px;">
+      <svg class="icon" style="color:var(--teal); width:24px; height:24px; margin-bottom:8px;"><use href="#i-shield"/></svg>
+      <h4 style="font-size:13.5px; margin:0 0 4px;">Prevención sobre detección</h4>
+      <p style="font-size:12.5px; color:var(--ink-soft); margin:0;">TDD, integración continua y revisiones de código, en vez de corregir después.</p>
+    </div>
+    <div class="card" style="text-align:center; padding:18px 14px;">
+      <svg class="icon" style="color:var(--teal); width:24px; height:24px; margin-bottom:8px;"><use href="#i-refresh"/></svg>
+      <h4 style="font-size:13.5px; margin:0 0 4px;">Retroalimentación temprana</h4>
+      <p style="font-size:12.5px; color:var(--ink-soft); margin:0;">Detectar un problema al inicio es mucho más barato que en producción.</p>
+    </div>
+    <div class="card" style="text-align:center; padding:18px 14px;">
+      <svg class="icon" style="color:var(--teal); width:24px; height:24px; margin-bottom:8px;"><use href="#i-gear"/></svg>
+      <h4 style="font-size:13.5px; margin:0 0 4px;">Automatización</h4>
+      <p style="font-size:12.5px; color:var(--ink-soft); margin:0;">Pruebas unitarias, de integración y de sistema, para acelerar la retroalimentación.</p>
+    </div>
+  </div>
+
+  <blockquote class="callout" style="margin-top:20px;">
+    <p><strong>Beneficios:</strong> menos costos de retrabajo, mayor velocidad de entrega, más confianza del cliente y un producto más fácil de mantener y escalar a futuro.</p>
+  </blockquote>
+
+  <div class="section-head">
+    <h2 style="font-size:21px;"><svg class="icon" style="width:22px;height:22px"><use href="#i-check"/></svg> Definition of Done (DoD)</h2>
+  </div>
+
+  <p>La <strong>Definition of Done</strong> es un conjunto de criterios acordados por el equipo que deben cumplirse para que una funcionalidad se considere "terminada". Es una lista de verificación indispensable que garantiza un estándar de calidad mínimo y reduce la ambigüedad sobre qué significa "hecho".</p>
+
+  <div class="card">
+    <p class="kicker">EJEMPLOS TÍPICOS DE CRITERIOS EN UNA DOD</p>
+    <ul class="clean" style="margin-bottom:0;">
+      <li><strong>Código:</strong> escrito y conforme a los estándares de estilo de la compañía.</li>
+      <li><strong>Pruebas:</strong> todas las pruebas unitarias y de integración pasaron con éxito.</li>
+      <li><strong>Revisión:</strong> el código fue revisado y aprobado por otro desarrollador.</li>
+      <li><strong>Documentación:</strong> la documentación técnica y de usuario está actualizada.</li>
+      <li><strong>Despliegue:</strong> el código fue desplegado en un entorno de pruebas o staging.</li>
+      <li><strong>Validación:</strong> el Product Owner revisó y validó el resultado.</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:20px;">Es común confundir la DoD con los <strong>Criterios de Aceptación</strong>, pero son conceptos diferentes y complementarios:</p>
+
+  <table class="cmp">
+    <thead><tr><th></th><th>Definition of Done (DoD)</th><th>Criterios de Aceptación</th></tr></thead>
+    <tbody>
+      <tr><td class="rowlabel">Alcance</td><td>Se aplica a <strong>todas</strong> las historias del equipo. Es un estándar de calidad global.</td><td>Es <strong>única</strong> para cada historia de usuario. Describe la funcionalidad específica a entregar.</td></tr>
+      <tr><td class="rowlabel">Ejemplo</td><td>"El código debe tener al menos 80% de cobertura de pruebas unitarias."</td><td>"El usuario debe poder iniciar sesión con un correo y una contraseña válidos."</td></tr>
+      <tr><td class="rowlabel">Responsable</td><td>Es definida por el <strong>equipo de desarrollo</strong>.</td><td>Es definida por el <strong>Product Owner</strong> en colaboración con el equipo.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="activity">
+    <div class="activity-head"><span class="tag">CLASIFICA</span><h3>¿DoD o Criterio de Aceptación?</h3></div>
+    <p class="instructions">Lee cada afirmación y decide a cuál de los dos conceptos corresponde.</p>
+    <div id="dodGame">
+      <div class="classify-item" data-answer="dod">
+        <p class="statement">1. Toda función debe pasar por revisión de otro desarrollador antes de fusionarse a la rama principal.</p>
+        <div class="classify-choices">
+          <button class="choice-btn" data-val="dod" onclick="answerDod(this)">Definition of Done</button>
+          <button class="choice-btn" data-val="ac" onclick="answerDod(this)">Criterio de Aceptación</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+      <div class="classify-item" data-answer="ac">
+        <p class="statement">2. El carrito de compras debe aplicar un descuento del 10% solo en compras mayores a $50.</p>
+        <div class="classify-choices">
+          <button class="choice-btn" data-val="dod" onclick="answerDod(this)">Definition of Done</button>
+          <button class="choice-btn" data-val="ac" onclick="answerDod(this)">Criterio de Aceptación</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+      <div class="classify-item" data-answer="dod">
+        <p class="statement">3. La documentación técnica debe estar actualizada antes de cerrar el sprint.</p>
+        <div class="classify-choices">
+          <button class="choice-btn" data-val="dod" onclick="answerDod(this)">Definition of Done</button>
+          <button class="choice-btn" data-val="ac" onclick="answerDod(this)">Criterio de Aceptación</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+      <div class="classify-item" data-answer="ac">
+        <p class="statement">4. El botón "Enviar" debe deshabilitarse mientras el formulario se está procesando.</p>
+        <div class="classify-choices">
+          <button class="choice-btn" data-val="dod" onclick="answerDod(this)">Definition of Done</button>
+          <button class="choice-btn" data-val="ac" onclick="answerDod(this)">Criterio de Aceptación</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TAB 5: GESTIÓN DEL CAMBIO (ADKAR) ============ -->
+<section class="panel" id="panel-cambio">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-refresh"/></svg> Gestión del cambio en entornos ágiles</h2>
+    <p class="lede">En las organizaciones ágiles el cambio no es un evento esporádico: es un proceso constante y bienvenido.</p>
+  </div>
+
+  <p>La capacidad de adaptarse rápidamente a nuevas condiciones del mercado, a la retroalimentación del cliente y a tecnologías emergentes es el núcleo de la agilidad. Aun así, la gestión del cambio sigue siendo crucial para que las transiciones sean fluidas y adoptadas por todos. No se trata de imponer un nuevo estado, sino de facilitar la evolución de los equipos, entendiendo y gestionando la resistencia de forma proactiva.</p>
+
+  <div class="section-head">
+    <h3 style="font-size:18px; margin:0;">Modelo ADKAR</h3>
+    <p class="lede" style="margin-top:4px;">Un marco centrado en las personas, desarrollado por Prosci: los cinco resultados que un individuo debe lograr para que un cambio sea exitoso.</p>
+  </div>
+
+  <div class="adkar-strip" id="adkarStrip">
+    <div class="adkar-letter active" data-phase="a1"><span class="big">A</span><span class="lbl">Conciencia</span></div>
+    <div class="adkar-letter" data-phase="d"><span class="big">D</span><span class="lbl">Deseo</span></div>
+    <div class="adkar-letter" data-phase="k"><span class="big">K</span><span class="lbl">Conocim.</span></div>
+    <div class="adkar-letter" data-phase="a2"><span class="big">A</span><span class="lbl">Habilidad</span></div>
+    <div class="adkar-letter" data-phase="r"><span class="big">R</span><span class="lbl">Refuerzo</span></div>
+  </div>
+
+  <div class="adkar-detail" id="adkarDetail"><!-- filled by JS --></div>
+
+  <div class="section-head">
+    <h3 style="font-size:18px; margin:0;">¿Por qué es efectivo el modelo ADKAR?</h3>
+  </div>
+  <div class="grid-2">
+    <div class="card"><h4 style="font-size:14.5px; margin:0 0 6px;">Centrado en el individuo</h4><p style="font-size:13.5px; color:var(--ink-soft); margin:0;">El cambio organizacional solo ocurre cuando los individuos cambian.</p></div>
+    <div class="card"><h4 style="font-size:14.5px; margin:0 0 6px;">Permite diagnosticar</h4><p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Si un equipo no avanza, ADKAR ayuda a identificar en qué etapa está estancado.</p></div>
+    <div class="card"><h4 style="font-size:14.5px; margin:0 0 6px;">Orientado a resultados</h4><p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Cada fase tiene un resultado tangible y medible antes de pasar a la siguiente.</p></div>
+    <div class="card"><h4 style="font-size:14.5px; margin:0 0 6px;">Aplicable a cualquier cambio</h4><p style="font-size:13.5px; color:var(--ink-soft); margin:0;">Sirve para cambios pequeños (nuevo software) o grandes transformaciones.</p></div>
+  </div>
+
+  <div class="activity">
+    <div class="activity-head"><span class="tag">DIAGNOSTICA</span><h3>¿Qué etapa de ADKAR está fallando?</h3></div>
+    <p class="instructions">Lee cada situación y elige la etapa de ADKAR que explica mejor la dificultad.</p>
+    <div id="adkarDiag"></div>
+  </div>
+</section>
+
+<!-- ============ TAB 6: INTEGRACIÓN ============ -->
+<section class="panel" id="panel-integracion">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-loop"/></svg> Integración de calidad y cambio</h2>
+    <p class="lede">Dos disciplinas que se refuerzan mutuamente en un ciclo continuo, no en un evento único.</p>
+  </div>
+
+  <p>Una cultura que abraza el cambio está más dispuesta a experimentar con nuevas formas de mejorar la calidad. A su vez, una alta calidad en las entregas genera confianza, lo que facilita la aceptación de futuros cambios. La gestión del cambio no es solo un proceso para transicionar hacia la agilidad — es un mecanismo continuo que sostiene la cultura de calidad a largo plazo.</p>
+
+  <blockquote class="callout">
+    <p>Piensa en la calidad como un edificio: las prácticas ágiles son los ladrillos, pero la gestión del cambio es el cimiento. Si el equipo no tiene conciencia de la necesidad del cambio, no desea participar, o no tiene el conocimiento y la habilidad para implementar las nuevas prácticas, el edificio de la calidad se desmorona.</p>
+  </blockquote>
+
+  <div class="cycle-wrap" style="margin-top:22px;">
+    <svg class="cycle-svg" viewBox="0 0 260 260">
+      <path d="M130,40 A90,90 0 0,1 220,130" fill="none" style="stroke:var(--teal-light)" stroke-width="3"/>
+      <path d="M220,130 A90,90 0 0,1 130,220" fill="none" style="stroke:var(--teal-light)" stroke-width="3"/>
+      <path d="M130,220 A90,90 0 0,1 40,130" fill="none" style="stroke:var(--teal-light)" stroke-width="3"/>
+      <path d="M40,130 A90,90 0 0,1 130,40" fill="none" style="stroke:var(--teal-light)" stroke-width="3"/>
+
+      <g class="cycle-node" data-node="calidad" onclick="showCycle('calidad')">
+        <circle cx="130" cy="40" r="32" style="fill:#fff; stroke:var(--teal); stroke-width:2"/>
+        <text x="130" y="35" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Calidad</text>
+        <text x="130" y="47" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Incorporada</text>
+      </g>
+      <g class="cycle-node" data-node="equipos" onclick="showCycle('equipos')">
+        <circle cx="220" cy="130" r="32" style="fill:#fff; stroke:var(--teal); stroke-width:2"/>
+        <text x="220" y="125" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Equipos</text>
+        <text x="220" y="137" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Adaptativos</text>
+      </g>
+      <g class="cycle-node" data-node="mejora" onclick="showCycle('mejora')">
+        <circle cx="130" cy="220" r="32" style="fill:#fff; stroke:var(--teal); stroke-width:2"/>
+        <text x="130" y="215" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Mejora</text>
+        <text x="130" y="227" text-anchor="middle" style="font:700 10px Inter, sans-serif; fill:var(--ink)">Continua</text>
+      </g>
+      <g class="cycle-node" data-node="gestion" onclick="showCycle('gestion')">
+        <circle cx="40" cy="130" r="32" style="fill:#fff; stroke:var(--teal); stroke-width:2"/>
+        <text x="40" y="125" text-anchor="middle" style="font:700 9.5px Inter, sans-serif; fill:var(--ink)">Gestión del</text>
+        <text x="40" y="137" text-anchor="middle" style="font:700 9.5px Inter, sans-serif; fill:var(--ink)">Cambio</text>
+      </g>
+    </svg>
+    <div class="cycle-detail" id="cycleDetail"><!-- filled by JS --></div>
+  </div>
+  <p style="text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:6px;">Toca cada nodo del ciclo para ver su rol.</p>
+
+  <div class="activity">
+    <div class="activity-head"><span class="tag">REFLEXIONA</span><h3>Aplícalo a tu propio contexto</h3></div>
+    <p class="instructions">Piensa en un cambio que tu equipo haya adoptado recientemente (una herramienta, un proceso, una metodología). ¿Qué etapa del ciclo faltó y generó fricción? Escribe tu reflexión — es solo para ti, no se envía a ningún lado.</p>
+    <textarea class="reflect" placeholder="Por ejemplo: adoptamos una nueva herramienta de gestión de tareas, pero nunca se explicó el motivo del cambio y varias personas siguieron usando el método anterior..."></textarea>
+  </div>
+</section>
+
+<!-- ============ TAB 7: ACTIVIDAD INTERACTIVA (QUIZ) ============ -->
+<section class="panel" id="panel-actividad">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-quiz"/></svg> Actividad interactiva</h2>
+    <p class="lede">Diez preguntas para integrar todo lo visto en la sesión. Recibes retroalimentación inmediata en cada una.</p>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div id="quizBody"></div>
+  </div>
+</section>
+
+<!-- ============ TAB 8: SÍNTESIS Y BIBLIOGRAFÍA ============ -->
+<section class="panel" id="panel-sintesis">
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-doc"/></svg> Síntesis de la sesión</h2>
+  </div>
+
+  <div class="card synth-card">
+    <div class="num">1</div>
+    <div><h4>Evolución de la calidad</h4><p>Pasamos de un modelo tradicional donde la calidad era una fase final, a un modelo ágil donde la calidad es un valor intrínseco que se construye de forma continua en cada etapa del desarrollo.</p></div>
+  </div>
+  <div class="card synth-card">
+    <div class="num">2</div>
+    <div><h4>Calidad incorporada</h4><p>En la agilidad, la calidad es responsabilidad de todo el equipo, no solo de un rol específico. Herramientas como la Definition of Done son clave para asegurar que el trabajo cumpla los estándares desde el principio.</p></div>
+  </div>
+  <div class="card synth-card">
+    <div class="num">3</div>
+    <div><h4>El cambio cultural es clave</h4><p>La agilidad no es solo un proceso: es una forma de trabajar que requiere una transformación cultural profunda. El principal obstáculo es la resistencia al cambio, por lo que es esencial gestionarla de manera proactiva.</p></div>
+  </div>
+  <div class="card synth-card">
+    <div class="num">4</div>
+    <div><h4>Gestión del cambio sostenible</h4><p>La gestión del cambio no es un tema aparte: es el pilar que sostiene la cultura de calidad. Modelos como ADKAR guían a las personas a través del proceso, asegurando que las nuevas prácticas se adopten y se mantengan.</p></div>
+  </div>
+
+  <div class="section-head">
+    <h2><svg class="icon"><use href="#i-book"/></svg> Bibliografía de la sesión</h2>
+  </div>
+  <div class="card">
+    <div class="biblio-item"><svg class="icon"><use href="#i-doc"/></svg><p>Schwaber, K., &amp; Sutherland, J. (2020). <em>La Guía de Scrum</em>. Scrum.org.</p></div>
+    <div class="biblio-item"><svg class="icon"><use href="#i-doc"/></svg><p>Leffingwell, D. (2011). <em>Agile Software Requirements: Lean Requirements Practices for Teams, Programs, and the Enterprise</em>.</p></div>
+    <div class="biblio-item"><svg class="icon"><use href="#i-doc"/></svg><p>Hiatt, J. M. (2006). <em>ADKAR: A Model for Change in Business, Government and Our Community</em>.</p></div>
+    <div class="biblio-item"><svg class="icon"><use href="#i-doc"/></svg><p>Humble, J., &amp; Farley, D. (2010). <em>Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation</em>.</p></div>
+    <div class="biblio-item"><svg class="icon"><use href="#i-doc"/></svg><p>Martin, R. C. (2008). <em>Clean Code: A Handbook of Agile Software Craftsmanship</em>.</p></div>
+  </div>
+
+  <div style="text-align:center; margin-top:34px;">
+    <button class="btn" data-jump="objetivo"><svg class="icon" style="width:15px;height:15px"><use href="#i-target"/></svg> Volver al objetivo</button>
+  </div>
+</section>
+
+</main>
+
+<footer class="page-foot">
+  Gestión de la Calidad · Universidad ECOTEC — Material de apoyo para la Unidad 4.3
+</footer>
+
+<script>
+/* ============ TAB NAVIGATION ============ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('section.panel');
+function goToTab(name){
+  tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+tabBtns.forEach(b => b.addEventListener('click', () => goToTab(b.dataset.tab)));
+document.addEventListener('click', e => {
+  const jump = e.target.closest('[data-jump]');
+  if(jump){ goToTab(jump.dataset.jump); }
+});
+
+/* ============ TAB 1: objective detail toggle ============ */
+function toggleObj(card){
+  const detail = card.querySelector('.obj-detail');
+  detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ============ TAB 3: tradicional vs ágil + checklist cultura ============ */
+function expandTA(card){
+  document.querySelectorAll('#tradAgilToggle .card').forEach(c => c.style.boxShadow = 'var(--shadow-sm)');
+  card.style.boxShadow = '0 6px 22px rgba(0,87,95,0.16)';
+}
+function toggleCheck(row){
+  if(row.classList.contains('reveal')) return;
+  row.classList.toggle('picked');
+}
+function revealCulture(){
+  const rows = document.querySelectorAll('#cultureCheck .check-row');
+  let correct = 0;
+  rows.forEach(r => {
+    const good = r.dataset.good === 'true';
+    const picked = r.classList.contains('picked');
+    r.classList.add('reveal');
+    if(good === picked){ r.classList.add('good'); correct++; }
+    else{ r.classList.add('bad'); }
+  });
+  const fb = document.getElementById('cultureFeedback');
+  fb.className = 'feedback show ' + (correct === rows.length ? 'ok' : 'bad');
+  fb.innerHTML = `<strong>${correct} de ${rows.length} correctas.</strong> Las afirmaciones en verde son las que sí describen una cultura ágil de calidad; en rojo, las que describen resistencia cultural o un enfoque tradicional.`;
+}
+
+/* ============ TAB 4: DoD vs Criterios de Aceptación ============ */
+const dodExplain = {
+  dod: {
+    1: 'Correcto. La revisión de código por un par es un estándar de calidad que aplica a todo el trabajo del equipo, sin importar la historia — eso es una DoD.',
+    3: 'Correcto. Mantener la documentación al día es un estándar general del equipo, no algo específico de una sola historia de usuario — eso es una DoD.'
+  },
+  ac: {
+    2: 'Correcto. Esta regla describe la funcionalidad específica de una historia de usuario en particular ("aplicar el descuento") — eso es un Criterio de Aceptación.',
+    4: 'Correcto. Este comportamiento describe cómo debe funcionar una pantalla o historia específica — eso es un Criterio de Aceptación.'
+  }
+};
+function answerDod(btn){
+  const item = btn.closest('.classify-item');
+  if(item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const answer = item.dataset.answer;
+  const picked = btn.dataset.val;
+  const idx = Array.from(item.parentElement.children).indexOf(item) + 1;
+  item.querySelectorAll('.choice-btn').forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === answer) b.classList.add('correct');
+    else if(b === btn) b.classList.add('incorrect');
+  });
+  const fb = item.querySelector('.feedback');
+  const correct = picked === answer;
+  fb.classList.add('show', correct ? 'ok' : 'bad');
+  const table = answer === 'dod' ? dodExplain.dod : dodExplain.ac;
+  fb.textContent = correct ? (table[idx] || 'Correcto.') : 'No es correcto. ' + (answer === 'dod' ? 'Esta afirmación es una Definition of Done: aplica como estándar a todas las historias del equipo.' : 'Esta afirmación es un Criterio de Aceptación: describe la funcionalidad específica de una historia.');
+}
+
+/* ============ TAB 5: ADKAR stepper ============ */
+const adkarData = {
+  a1: { letter:'A', name:'Awareness · Conciencia', q:'¿Por qué es necesario este cambio?',
+    body:'Es la primera etapa: que las personas entiendan por qué el cambio es necesario. No basta con saber que algo va a cambiar — hay que comprender los riesgos de no cambiar, las oportunidades de la nueva situación y el impacto en sus roles. Si las personas no entienden el "por qué", es probable que se resistan desde el principio.',
+    acts:['Comunicación clara y transparente', 'Reuniones informativas', 'Discusiones abiertas sobre el motivo del cambio'] },
+  d: { letter:'D', name:'Desire · Deseo', q:'¿Quiero participar y apoyar el cambio?',
+    body:'La conciencia no garantiza el deseo: el deseo es una elección personal. Para fomentarlo hay que mostrar los beneficios que el cambio trae a nivel individual —no solo organizacional— como mejoras en el trabajo diario o nuevas oportunidades de crecimiento.',
+    acts:['Involucrar a las personas en la planificación', 'Ofrecer incentivos', 'Destacar los beneficios personales del cambio'] },
+  k: { letter:'K', name:'Knowledge · Conocimiento', q:'¿Cómo debo cambiar? ¿Qué debo hacer?',
+    body:'Una vez que las personas están conscientes y desean el cambio, necesitan saber cómo hacerlo. Esta fase provee la formación y la información necesarias para adquirir las habilidades de la nueva forma de trabajar.',
+    acts:['Programas de formación y talleres', 'Manuales y guías de usuario', 'Sesiones de preguntas y respuestas'] },
+  a2: { letter:'A', name:'Ability · Habilidad', q:'¿Puedo hacer lo que se me pide?',
+    body:'Tener el conocimiento no siempre se traduce en tener la habilidad. Esta etapa es la diferencia entre la teoría y la práctica: requiere oportunidades para aplicar lo aprendido, recibir retroalimentación y resolver los problemas que surjan.',
+    acts:['Coaching y mentoría', 'Prácticas supervisadas', 'Apoyo continuo durante la aplicación'] },
+  r: { letter:'R', name:'Reinforcement · Refuerzo', q:'¿Cómo mantendremos este cambio en el tiempo?',
+    body:'El paso final, y el más olvidado. El cambio no se sostiene solo: hace falta reforzar los nuevos comportamientos y evitar volver a las viejas costumbres, mediante el reconocimiento y la integración del cambio en la cultura del equipo.',
+    acts:['Celebración de logros', 'Sistemas de reconocimiento', 'Seguimiento de resultados en el tiempo'] }
+};
+function renderAdkar(phase){
+  const d = adkarData[phase];
+  document.querySelectorAll('#adkarStrip .adkar-letter').forEach(el => el.classList.toggle('active', el.dataset.phase === phase));
+  document.getElementById('adkarDetail').innerHTML = `
+    <h4>${d.letter} — ${d.name}</h4>
+    <p class="q">${d.q}</p>
+    <p style="font-size:14.5px; margin-bottom:0;">${d.body}</p>
+    <div class="acts">
+      <p class="lbl-sm">Actividades típicas</p>
+      <ul class="clean" style="margin-bottom:0;">${d.acts.map(a => `<li>${a}</li>`).join('')}</ul>
+    </div>`;
+}
+document.querySelectorAll('#adkarStrip .adkar-letter').forEach(el => el.addEventListener('click', () => renderAdkar(el.dataset.phase)));
+renderAdkar('a1');
+
+/* ADKAR diagnostic activity */
+const adkarScenarios = [
+  { text:'La gerencia anunció que se adoptará Scrum, pero nunca explicó qué problema resuelve ni por qué se abandona el modelo anterior.', answer:'Conciencia', explain:'Falta Conciencia (Awareness): sin entender el "por qué", el equipo no tiene motivo para dejar de resistirse.' },
+  { text:'El equipo entiende perfectamente por qué deben migrar a un nuevo sistema, pero varios se sienten cómodos con el proceso actual y no muestran intención de participar.', answer:'Deseo', explain:'Falta Deseo (Desire): entender el cambio no equivale a querer participar en él.' },
+  { text:'Los desarrolladores están de acuerdo con adoptar integración continua, pero nadie les ha enseñado a configurar el pipeline.', answer:'Conocimiento', explain:'Falta Conocimiento (Knowledge): quieren cambiar, pero no saben cómo hacerlo.' },
+  { text:'El equipo asistió a la capacitación de la nueva herramienta, pero comete errores constantes al usarla en sus primeros intentos reales.', answer:'Habilidad', explain:'Falta Habilidad (Ability): tienen el conocimiento teórico, pero les falta práctica supervisada.' },
+  { text:'Un equipo aplicó bien las nuevas prácticas de revisión de código durante un mes, pero después volvió a las viejas costumbres porque nadie más las mencionó ni las reconoció.', answer:'Refuerzo', explain:'Falta Refuerzo (Reinforcement): sin reconocimiento ni seguimiento, el cambio no se sostiene en el tiempo.' }
+];
+const adkarOptions = ['Conciencia','Deseo','Conocimiento','Habilidad','Refuerzo'];
+function renderAdkarDiag(){
+  const wrap = document.getElementById('adkarDiag');
+  wrap.innerHTML = adkarScenarios.map((s,i) => `
+    <div class="classify-item" data-answer="${s.answer}" data-explain="${s.explain}">
+      <p class="statement">${i+1}. ${s.text}</p>
+      <div class="classify-choices">
+        ${adkarOptions.map(o => `<button class="choice-btn" data-val="${o}" onclick="answerAdkar(this)">${o}</button>`).join('')}
+      </div>
+      <div class="feedback"></div>
+    </div>`).join('');
+}
+function answerAdkar(btn){
+  const item = btn.closest('.classify-item');
+  if(item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const answer = item.dataset.answer;
+  item.querySelectorAll('.choice-btn').forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === answer) b.classList.add('correct');
+    else if(b === btn) b.classList.add('incorrect');
+  });
+  const fb = item.querySelector('.feedback');
+  const correct = btn.dataset.val === answer;
+  fb.classList.add('show', correct ? 'ok' : 'bad');
+  fb.textContent = item.dataset.explain;
+}
+renderAdkarDiag();
+
+/* ============ TAB 6: cycle diagram ============ */
+const cycleData = {
+  calidad: { title:'Calidad Incorporada', body:'Estándares y prácticas de calidad definidos e integrados desde el inicio del trabajo, no verificados al final.' },
+  equipos: { title:'Equipos Adaptativos', body:'Equipos listos para adoptar nuevas herramientas y procesos, como resultado directo de una gestión del cambio efectiva.' },
+  mejora: { title:'Mejora Continua', body:'El aprendizaje constante refuerza la cultura de calidad y retroalimenta al equipo sobre qué ajustar.' },
+  gestion: { title:'Gestión del Cambio', body:'Acompaña la adopción de nuevas prácticas de calidad, asegurando que se comprendan, acepten y arraiguen en el equipo.' }
+};
+function showCycle(node){
+  const d = cycleData[node];
+  document.getElementById('cycleDetail').innerHTML = `<h4>${d.title}</h4><p style="margin:0; font-size:14.5px; color:var(--ink-soft);">${d.body}</p>`;
+}
+showCycle('calidad');
+
+/* ============ TAB 7: quiz ============ */
+const quizQuestions = [
+  { q:'En los modelos tradicionales tipo cascada, ¿cómo se abordaba típicamente la calidad?',
+    opts:['Como una responsabilidad compartida desde el inicio','Como una fase final de verificación a cargo de un equipo de QA','Como parte del backlog priorizado por el Product Owner','Como un proceso continuo integrado en cada sprint'],
+    correct:1, explain:'En cascada, la calidad se validaba al final del proyecto, lo que encarecía la corrección de errores detectados tarde.' },
+  { q:'¿Qué significa el principio de "Calidad Incorporada" (Built-in Quality)?',
+    opts:['Contratar más personal de QA','La calidad se construye en cada etapa del proceso, no se verifica al final','Automatizar solo las pruebas de regresión','Delegar la calidad al Product Owner'],
+    correct:1, explain:'La calidad es responsabilidad de todo el equipo desde el inicio, no un paso posterior.' },
+  { q:'En Kanban, ¿qué práctica ayuda indirectamente a mejorar la calidad?',
+    opts:['Los sprints de dos semanas','La limitación del trabajo en progreso (WIP)','El uso exclusivo de historias de usuario','La eliminación de las retrospectivas'],
+    correct:1, explain:'Limitar el WIP reduce el multitasking y permite que el equipo se concentre en terminar bien cada tarea.' },
+  { q:'¿Cuál es la diferencia principal entre la Definition of Done y los Criterios de Aceptación?',
+    opts:['Son exactamente lo mismo','La DoD aplica a todas las historias del equipo; los criterios de aceptación son específicos de cada historia','Los criterios de aceptación los define el equipo de desarrollo y la DoD el Product Owner','La DoD cambia en cada sprint y los criterios de aceptación son fijos'],
+    correct:1, explain:'La DoD es un estándar global de calidad; los criterios de aceptación describen la funcionalidad específica de una historia.' },
+  { q:'Según ADKAR, si un equipo sabe qué hacer y quiere hacerlo, pero no logra ejecutarlo bien en la práctica, ¿qué etapa falta reforzar?',
+    opts:['Conciencia','Deseo','Habilidad','Refuerzo'],
+    correct:2, explain:'Conocer la teoría no equivale a tener la habilidad práctica; esta fase requiere coaching y práctica supervisada.' },
+  { q:'¿Por qué se considera efectivo el modelo ADKAR para gestionar el cambio?',
+    opts:['Porque se enfoca únicamente en la estrategia organizacional','Porque permite diagnosticar en qué etapa específica se encuentra la resistencia de una persona','Porque elimina la necesidad de capacitación','Porque solo aplica a grandes transformaciones organizacionales'],
+    correct:1, explain:'Al centrarse en el individuo, ADKAR permite identificar exactamente dónde se estanca el proceso de cambio.' },
+  { q:'¿Qué rol cumple la gestión del cambio en la sostenibilidad de la cultura de calidad?',
+    opts:['Es un proceso aislado, sin relación con la calidad','Es el mecanismo que asegura que las nuevas prácticas de calidad sean comprendidas, aceptadas y arraigadas','Solo se aplica una vez, durante la transición inicial a la agilidad','Reemplaza la necesidad de una Definition of Done'],
+    correct:1, explain:'La gestión del cambio sostiene, en el tiempo, la adopción real de las prácticas de calidad.' },
+  { q:'En un entorno ágil con calidad incorporada, la responsabilidad de la calidad recae en:',
+    opts:['Únicamente el equipo de QA','Únicamente el Product Owner','Todo el equipo (desarrolladores, diseñadores, product owner, etc.)','Únicamente el Scrum Master'],
+    correct:2, explain:'La calidad incorporada distribuye la responsabilidad entre todos los integrantes del equipo.' },
+  { q:'¿Cuál de los siguientes es un cambio cultural que habilita la agilidad?',
+    opts:['Mantener estructuras jerárquicas rígidas','Ver los errores como fallas a castigar','Pasar de silos departamentales a equipos multifuncionales autónomos','Centralizar toda decisión en la gerencia'],
+    correct:2, explain:'La agilidad requiere colaboración, autoorganización y confianza, no jerarquía rígida.' },
+  { q:'La frase "la calidad no se prueba, se construye" resume mejor el principio de:',
+    opts:['Criterios de Aceptación','Calidad Incorporada (Built-in Quality)','Modelo ADKAR','Metodología en cascada'],
+    correct:1, explain:'Es la idea central de Built-in Quality: prevenir en vez de detectar al final.' }
+];
+let quizIdx = 0, quizScore = 0;
+function renderQuiz(){
+  const body = document.getElementById('quizBody');
+  if(quizIdx >= quizQuestions.length){
+    body.innerHTML = `
+      <div class="quiz-score">
+        <div class="num">${quizScore}/${quizQuestions.length}</div>
+        <p style="font-size:15px; color:var(--ink-soft); margin:10px 0 20px;">${quizScore === quizQuestions.length ? '¡Excelente! Dominas los conceptos de la unidad.' : 'Buen intento. Revisa las secciones anteriores en los puntos que fallaste.'}</p>
+        <button class="btn primary" onclick="quizIdx=0; quizScore=0; renderQuiz();">Reintentar</button>
+      </div>`;
+    return;
+  }
+  const item = quizQuestions[quizIdx];
+  body.innerHTML = `
+    <div class="quiz-progress"><span>Pregunta ${quizIdx+1} de ${quizQuestions.length}</span><span>Puntaje: ${quizScore}</span></div>
+    <p class="quiz-q">${item.q}</p>
+    <div class="quiz-opts">${item.opts.map((o,i) => `<button class="quiz-opt" data-i="${i}" onclick="answerQuiz(${i})">${o}</button>`).join('')}</div>
+    <div class="quiz-explain" id="quizExplain"></div>
+    <div style="text-align:right;"><button class="btn primary" id="quizNextBtn" style="display:none" onclick="quizIdx++; renderQuiz();">${quizIdx === quizQuestions.length-1 ? 'Ver resultado' : 'Siguiente'} <svg class="icon" style="width:15px;height:15px"><use href="#i-arrow"/></svg></button></div>`;
+}
+function answerQuiz(i){
+  const item = quizQuestions[quizIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  if(opts[0].disabled) return;
+  opts.forEach((b,idx) => {
+    b.disabled = true;
+    if(idx === item.correct) b.classList.add('correct');
+    else if(idx === i) b.classList.add('incorrect');
+  });
+  if(i === item.correct) quizScore++;
+  const ex = document.getElementById('quizExplain');
+  ex.classList.add('show');
+  ex.innerHTML = `<strong>${i === item.correct ? 'Correcto.' : 'No es correcto.'}</strong> ${item.explain}`;
+  document.getElementById('quizNextBtn').style.display = 'inline-flex';
+}
+renderQuiz();
+
+/* ============ SCRIPT_INSERT_POINT ============ */
+</script>
+</body>
+</html>
